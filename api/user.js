@@ -12,8 +12,8 @@ module.exports = (app) => {
             const password = hash;
             app.db("users")
                 .insert({
-                    name: req.body.name,
-                    email: req.body.email,
+                    name: req.body.name.trim(),
+                    email: req.body.email.trim(),
                     password,
                 })
                 .then((_) => res.status(204).send())
