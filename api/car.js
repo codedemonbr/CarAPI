@@ -30,5 +30,13 @@ module.exports = (app) => {
             .catch((err) => res.status(400).json(err));
     };
 
-    return { getCars, save, remove };
+    const update = (req, res) => {
+                app.db("cars")
+            .where({ id: req.params.id, userId: req.user.id })
+            .update(req.body)
+            .then((_) => res.status(204).send())
+            .catch((err) => res.status(400).json(err));
+    };
+
+    return { getCars, save, remove, update };
 };

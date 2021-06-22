@@ -14,16 +14,20 @@ module.exports = (app) => {
 
         const user = await app
             .db("users")
-            .where({ email: req.body.email })
+            .whereRaw("LOWER(email) = LOWER(?)", req.body.email)
             .first();
 
         if (user) {
             bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
                 if (err || !isMatch) {
-                    return res.status(400).send("Invalid password.");
+                    return res.status(401).send("Invalid password.");
                 }
-                const payload = { id: user.id };
-
+                const payload = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                };
+                
                 res.json({
                     name: user.name,
                     email: user.email,

@@ -10,4 +10,8 @@ module.exports = (app) => {
     app.route("/cars/:id")
         .all(app.config.passport.authenticate())
         .delete(app.api.car.remove);
+
+    app.route("/cars/:id")
+        .all(app.config.passport.authenticate())
+        .put(app.api.car.update);
 };
