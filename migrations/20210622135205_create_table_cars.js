@@ -6,6 +6,7 @@ exports.up = function (knex, Promise) {
         table.integer("year").notNull(); // Ano
         table.string("fuel").notNull(); // Combustível
         table.decimal("price").notNull(); //Preço
+        table.integer("userId").references("id").inTable("users").notNull(); // relação Carros <=> usuários
     });
 };
 
